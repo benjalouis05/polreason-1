@@ -23,13 +23,20 @@ DIR_SCRIPTS <- "analysis/scripts"
 source(file = file.path(DIR_SCRIPTS, "0.config.R"))
 
 # # --- Define Experiment Details ------------------------------------------ # #
-rater_files <- list.files(
-  path = sprintf("generation/synthetic_data/year_%d", YEAR),
-  pattern = "\\.csv$",
-  full.names = FALSE
-)
+# Check for command line arguments to filter raters
+args <- commandArgs(trailingOnly = TRUE)
 
-RATERrs_list <- c("gss", tools::file_path_sans_ext(rater_files))
+if (length(args) > 0) {
+  message("Using raters specified in command line arguments: ", paste(args, collapse = ", "))
+  RATERrs_list <- c("gss", args)
+} else {
+  rater_files <- list.files(
+    path = sprintf("generation/synthetic_data/year_%d", YEAR),
+    pattern = "\\.csv$",
+    full.names = FALSE
+  )
+  RATERrs_list <- c("gss", tools::file_path_sans_ext(rater_files))
+}
 
 for (r in seq_along(RATERrs_list)) {
   RATER <- RATERrs_list[r]
