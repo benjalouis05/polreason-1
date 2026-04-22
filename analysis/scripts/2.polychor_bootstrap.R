@@ -275,16 +275,21 @@ if(run_from_scratch == TRUE){
     ## 2. Convert only those to ordered
     dat_ord <- to_ordered(dat_j[, ..keep_vars], keep_vars)
     
-    corr_list[[j]] <-
-      lavaan::lavCor(
-        dat_ord,
-        ordered     = keep_vars,
-        estimator   = "two.step",
-        se          = "none",
-        output      = "cor",
-        cor.smooth  = TRUE,
-        missing     = "pairwise"
-      )
+    if (length(keep_vars) >= 2L) {
+      corr_list[[j]] <-
+        lavaan::lavCor(
+          dat_ord,
+          ordered     = keep_vars,
+          estimator   = "two.step",
+          se          = "none",
+          output      = "cor",
+          cor.smooth  = TRUE,
+          missing     = "pairwise"
+        )
+    } else {
+      corr_list[[j]] <- NULL
+      message("Bootstrap ", j, ": insufficient variance (at least 2 vars required); skipping overall.")
+    }
     
     dat_ord_loedu <- dat_ord[educ %in% 1:13][,!'educ']
     
@@ -300,16 +305,21 @@ if(run_from_scratch == TRUE){
     
     dat_ord_loedu <- to_ordered(dat_ord_loedu[, ..keep_vars], keep_vars)
     
-    corr_lo.edu_list[[j]] <-
-      lavaan::lavCor(
-        dat_ord_loedu, # some college is threshold 
-        ordered     = keep_vars,
-        estimator   = "two.step",
-        se          = "none",
-        output      = "cor",
-        cor.smooth  = TRUE,
-        missing     = "pairwise"
-      )
+    if (length(keep_vars) >= 2L) {
+      corr_lo.edu_list[[j]] <-
+        lavaan::lavCor(
+          dat_ord_loedu, # some college is threshold 
+          ordered     = keep_vars,
+          estimator   = "two.step",
+          se          = "none",
+          output      = "cor",
+          cor.smooth  = TRUE,
+          missing     = "pairwise"
+        )
+    } else {
+      corr_lo.edu_list[[j]] <- NULL
+      message("Bootstrap ", j, ": insufficient variance; skipping lo-edu.")
+    }
     
     
     dat_ord_hiedu <- dat_ord[educ %in% 14:20][,!'educ']
@@ -326,16 +336,21 @@ if(run_from_scratch == TRUE){
     
     dat_ord_hiedu <- to_ordered(dat_ord_hiedu[, ..keep_vars], keep_vars)
     
-    corr_hi.edu_list[[j]] <-
-      lavaan::lavCor(
-        dat_ord_hiedu, # some college is threshold 
-        ordered     = keep_vars,
-        estimator   = "two.step",
-        se          = "none",
-        output      = "cor",
-        cor.smooth  = TRUE,
-        missing     = "pairwise"
-      )
+    if (length(keep_vars) >= 2L) {
+      corr_hi.edu_list[[j]] <-
+        lavaan::lavCor(
+          dat_ord_hiedu, # some college is threshold 
+          ordered     = keep_vars,
+          estimator   = "two.step",
+          se          = "none",
+          output      = "cor",
+          cor.smooth  = TRUE,
+          missing     = "pairwise"
+        )
+    } else {
+      corr_hi.edu_list[[j]] <- NULL
+      message("Bootstrap ", j, ": insufficient variance; skipping hi-edu.")
+    }
   }
   
   # save the correlation matrices 
