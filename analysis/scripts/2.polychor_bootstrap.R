@@ -215,19 +215,24 @@ if(run_from_scratch == TRUE){
   if (length(vars_to_impute) != 0L) {
     
     for (j in seq_along(boot_list)) {
-      # pick a random imputation mechanism (1..m) 
-      ds_idx <- sample.int(mr$callParams$m, 1L)
-      
-      imp_res <- miceRanger::impute(
-        boot_list[[j]],
-        miceObj  = mr,
-        datasets = ds_idx
-      )
-      
-      message("Imputed NAs for bootstrap ", j, "/", B)
-      
-      # overwrite in place
-      boot_list[[j]] <- imp_res$imputedData[[1L]]
+      # Only impute if there are missing values to fill
+      if (anyNA(boot_list[[j]])) {
+        # pick a random imputation mechanism (1..m) 
+        ds_idx <- sample.int(mr$callParams$m, 1L)
+        
+        imp_res <- miceRanger::impute(
+          boot_list[[j]],
+          miceObj  = mr,
+          datasets = ds_idx
+        )
+        
+        message("Imputed NAs for bootstrap ", j, "/", B)
+        
+        # overwrite in place
+        boot_list[[j]] <- imp_res$imputedData[[1L]]
+      } else {
+        message("No NAs found in bootstrap ", j, "/", B, "; skipping imputation.")
+      }
     }
   }
   
