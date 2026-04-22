@@ -98,7 +98,7 @@
 YEAR        <- get0("YEAR", ifnotfound = 2024L)
 RATER_GSS   <- "gss"
 
-OUTFILE_PDF <- file.path(BASE_VIZ_DIR, sprintf("pairwise_kappa_%s.pdf", YEAR))
+OUTFILE_PDF <- file.path(BASE_VIZ_DIR, sprintf("pairwise_kappa_%s%s.pdf", YEAR, FILE_SUFFIX))
 PDF_WIDTH   <- 12.5
 PDF_HEIGHT  <- 12.5
 
@@ -459,7 +459,7 @@ pal_cols <- col_kappa_vec(k_grid)
 
 
 # point estimates from script 1
-constraint_file <- file.path(BASE_OUT_DIR, sprintf("constraint_point_stats_%s.csv", YEAR))
+constraint_file <- file.path(BASE_OUT_DIR, sprintf("constraint_point_stats_%s%s.csv", YEAR, FILE_SUFFIX))
 if (!file.exists(constraint_file)) {
   warning("Missing constraint point-estimate file: ", constraint_file,
           "\nRun the constraint diagnostics script first.")
@@ -539,7 +539,7 @@ if (!file.exists(constraint_file)) {
     ann_dt <- data.table::data.table(x = 0.98, y = 0.02, lab = coef_lab)
     
     # output
-    OUTFILE_PDF_3WAY <- file.path(BASE_VIZ_DIR, sprintf("constraints_pc1_De_kappa_%s.pdf", YEAR))
+    OUTFILE_PDF_3WAY <- file.path(BASE_VIZ_DIR, sprintf("constraints_pc1_De_kappa_%s%s.pdf", YEAR, FILE_SUFFIX))
     
     p <- ggplot2::ggplot(plot_dt, ggplot2::aes(x = pc1_var_explained, y = effective_dependence)) +
       ggplot2::geom_point(

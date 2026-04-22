@@ -389,8 +389,8 @@ create_saturn_plot <- function(
   # Save plot
   if (save_pdf) {
     if (is.null(output_file)) {
-      mvn_dir <- file.path(base_viz_dir, sprintf("mvn_%d", year))
-      output_file <- file.path(mvn_dir, "saturn_plot.pdf")
+      mvn_dir <- file.path(base_viz_dir, paste0("mvn_", year, FILE_SUFFIX))
+      output_file <- file.path(mvn_dir, paste0("saturn_plot", FILE_SUFFIX, ".pdf"))
     }
     dir.create(dirname(output_file), recursive = TRUE, showWarnings = FALSE)
     message("Saving: ", output_file)
@@ -401,12 +401,12 @@ create_saturn_plot <- function(
   
   # Save summaries
   if (save_summaries) {
-    mac_file <- file.path(base_out_dir, sprintf("mac_summary_%d.csv", year))
+    mac_file <- file.path(base_out_dir, sprintf("mac_summary_%d%s.csv", year, FILE_SUFFIX))
     fwrite(mac_summary, mac_file)
     message("Saved MAC summary: ", mac_file)
     
     quantile_dt <- rbindlist(quantile_summary, use.names = TRUE, fill = TRUE)
-    quant_file <- file.path(base_out_dir, sprintf("correlation_quantiles_%d.csv", year))
+    quant_file <- file.path(base_out_dir, sprintf("correlation_quantiles_%d%s.csv", year, FILE_SUFFIX))
     fwrite(quantile_dt, quant_file)
     message("Saved correlation quantiles: ", quant_file)
   }
@@ -557,9 +557,9 @@ create_saturn_facet_grid <- function(
   # Save plot
   if (save_pdf) {
     if (is.null(output_file)) {
-      mvn_dir <- file.path(base_viz_dir, sprintf("mvn_%d", year))
+      mvn_dir <- file.path(base_viz_dir, paste0("mvn_", year, FILE_SUFFIX))
       dir.create(mvn_dir, recursive = TRUE, showWarnings = FALSE)
-      output_file <- file.path(mvn_dir, "saturn_facet_grid.pdf")
+      output_file <- file.path(mvn_dir, paste0("saturn_facet_grid", FILE_SUFFIX, ".pdf"))
     }
 
     # Calculate dimensions for horizontal strip (all in one row)

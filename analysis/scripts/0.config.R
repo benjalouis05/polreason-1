@@ -152,6 +152,8 @@ B = 50L
 
 # multiple imputation DGPs
 B_MI = 30L
+FILE_SUFFIX <- "_v2"
+
 
 # # --- Define directories ------------------------------------------------- # #
 DIR_GSS      <- paste0('generation/data/gss',YEAR,'_dellaposta_extract.rds')

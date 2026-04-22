@@ -93,7 +93,7 @@ CUMVAR_TARGET     <- 0.90
 MIN_PC_SHARE      <- 0.01
 
 # Output
-OUTFILE_PDF       <- file.path(BASE_VIZ_DIR, sprintf("missing_variance_rayleigh_%s.pdf", YEAR))
+OUTFILE_PDF       <- file.path(BASE_VIZ_DIR, sprintf("missing_variance_rayleigh_%s%s.pdf", YEAR, FILE_SUFFIX))
 PDF_WIDTH         <- 22.5
 PDF_HEIGHT        <- 10
 
@@ -1019,7 +1019,7 @@ p_loadings_full <- plot_pc_loadings_grid_full_signed_labels(gss_basis, value_dig
 
 OUTFILE_LOADINGS_PDF <- file.path(
   BASE_VIZ_DIR,
-  sprintf("missing_variance_rayleigh_%s_loadings_grid.pdf", YEAR)
+  sprintf("missing_variance_rayleigh_%s%s_loadings_grid.pdf", YEAR, FILE_SUFFIX)
 )
 
 # Size PDF to grid so labels actually exist on the page

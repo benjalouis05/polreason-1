@@ -116,7 +116,7 @@
 ################################################################################
 # A) LOAD + RESHAPE HARMONISED DATA (long -> wide)
 ################################################################################
-data_j <- readRDS(file = paste0(DIR_OUT,'/harmonised_data.rds'))
+data_j <- readRDS(file = paste0(DIR_OUT,'/harmonised_data',FILE_SUFFIX,'.rds'))
 
 # Use everything in data_j, treating all variables as ordinal (including persona vars)
 # Keep only the columns we need; assume exactly one answer per (persona_id, run, variable)
@@ -334,14 +334,14 @@ if(run_from_scratch == TRUE){
   }
   
   # save the correlation matrices 
-  saveRDS(corr_list, file = file.path(DIR_OUT, "polychor_bootstrap.rds"))
-  saveRDS(corr_lo.edu_list, file = file.path(DIR_OUT, "polychor_bootstrap_loedu.rds"))
-  saveRDS(corr_hi.edu_list, file = file.path(DIR_OUT, "polychor_bootstrap_hiedu.rds"))
+  saveRDS(corr_list, file = file.path(DIR_OUT, paste0("polychor_bootstrap", FILE_SUFFIX, ".rds")))
+  saveRDS(corr_lo.edu_list, file = file.path(DIR_OUT, paste0("polychor_bootstrap_loedu", FILE_SUFFIX, ".rds")))
+  saveRDS(corr_hi.edu_list, file = file.path(DIR_OUT, paste0("polychor_bootstrap_hiedu", FILE_SUFFIX, ".rds")))
   
 }else{
-  corr_list <- readRDS(file = file.path(DIR_OUT, "polychor_bootstrap.rds"))
-  corr_lo.edu_list <- readRDS(file = file.path(DIR_OUT, "polychor_bootstrap_loedu.rds"))
-  corr_hi.edu_list <- readRDS(file = file.path(DIR_OUT, "polychor_bootstrap_hiedu.rds"))
+  corr_list <- readRDS(file = file.path(DIR_OUT, paste0("polychor_bootstrap", FILE_SUFFIX, ".rds")))
+  corr_lo.edu_list <- readRDS(file = file.path(DIR_OUT, paste0("polychor_bootstrap_loedu", FILE_SUFFIX, ".rds")))
+  corr_hi.edu_list <- readRDS(file = file.path(DIR_OUT, paste0("polychor_bootstrap_hiedu", FILE_SUFFIX, ".rds")))
 }
 
 
@@ -492,7 +492,7 @@ r_miss_diff <- cor(
 )
 
 # save this for later analysis
-saveRDS(r_miss_diff, file = file.path(DIR_OUT, "corr_mice_stability_check.rds"))
+saveRDS(r_miss_diff, file = file.path(DIR_OUT, paste0("corr_mice_stability_check", FILE_SUFFIX, ".rds")))
 
 
 legend_title_p2 <- paste0(
@@ -551,7 +551,7 @@ p2 <- ggplot(pair_diff_dt, aes(x = miss_mean_pct, y = diff_abs)) +
 file_path <- file.path(BASE_VIZ_DIR, paste0(RATER,"-", as.character(YEAR)))
 dir.create(file_path, recursive = TRUE, showWarnings = FALSE)
 
-pdf(file.path(file_path, "corr_mice_stability_check.pdf"),
+pdf(file.path(file_path, paste0("corr_mice_stability_check", FILE_SUFFIX, ".pdf")),
     width = 12.5, height = 5)
 
 grid.arrange(p1, p2, ncol = 2)
@@ -615,7 +615,7 @@ p_miss <- ggplot(miss_sum_dt, aes(
 miss_dir <- file.path(BASE_VIZ_DIR, paste0(RATER, "-", as.character(YEAR)))
 dir.create(miss_dir, recursive = TRUE, showWarnings = FALSE)
 
-pdf(file.path(miss_dir, "missingness_interval_bootstrap.pdf"),
+pdf(file.path(miss_dir, paste0("missingness_interval_bootstrap", FILE_SUFFIX, ".pdf")),
     width = 8.5, height = max(6, 0.18 * nrow(miss_sum_dt) + 2))
 print(p_miss)
 dev.off()

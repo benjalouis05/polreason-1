@@ -667,12 +667,12 @@ if (nrow(constraint_dt)) {
 # ---- save tables ---------------------------------------------------------- #
 
 if (nrow(constraint_dt)) {
-  boot_csv <- file.path(BASE_OUT_DIR, sprintf("constraint_bootstrap_stats_%s.csv", year))
+  boot_csv <- file.path(BASE_OUT_DIR, sprintf("constraint_bootstrap_stats_%s%s.csv", year, FILE_SUFFIX))
   data.table::fwrite(constraint_dt, boot_csv)
 }
 
 if (nrow(constraint_point_dt)) {
-  point_csv <- file.path(BASE_OUT_DIR, sprintf("constraint_point_stats_%s.csv", year))
+  point_csv <- file.path(BASE_OUT_DIR, sprintf("constraint_point_stats_%s%s.csv", year, FILE_SUFFIX))
   data.table::fwrite(constraint_point_dt, point_csv)
 }
 
@@ -686,7 +686,7 @@ if (nrow(constraint_dt)) {
     value_col = "pc1_var_explained",
     xlab      = "Proportion of variance (attitudes + persona vars) explained by PC1",
     main      = "",
-    out_file  = file.path(viz_dir, sprintf("constraint_pc1_var_explained_by_edu_%s.pdf", year))
+    out_file  = file.path(viz_dir, sprintf("constraint_pc1_var_explained_by_edu_%s%s.pdf", year, FILE_SUFFIX))
   )
   
   plot_half_violins_edu(
@@ -695,7 +695,7 @@ if (nrow(constraint_dt)) {
     xlab      = "Effective dependence De (1 - |R|^(1/p))",
     main      = "",
     lolli_pad_frac = 0.01,
-    out_file  = file.path(viz_dir, sprintf("constraint_effective_dependence_by_edu_%s.pdf", year))
+    out_file  = file.path(viz_dir, sprintf("constraint_effective_dependence_by_edu_%s%s.pdf", year, FILE_SUFFIX))
   )
 }
 
@@ -703,7 +703,7 @@ if (nrow(constraint_dt)) {
 # ---- scatter plot (point estimates) -------------------------------------- #
 
 if (nrow(constraint_point_dt)) {
-  scatter_file <- file.path(viz_dir, "constraint_pc1_vs_effective_dependence_by_edu.pdf")
+  scatter_file <- file.path(viz_dir, paste0("constraint_pc1_vs_effective_dependence_by_edu", FILE_SUFFIX, ".pdf"))
   plot_scatter_De_vs_PC1_gg(dt = constraint_point_dt, out_file = scatter_file)
 }
 

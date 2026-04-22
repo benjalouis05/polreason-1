@@ -836,7 +836,7 @@ if (nrow(constraint_dt) && !isTRUE(get0("SKIP_V2B_PLOTS", ifnotfound = FALSE))) 
     reduced_col   = "pc1_beliefs_cond",
     xlab          = "PC1 share of variance among beliefs",
     main          = "",
-    out_file      = file.path(viz_dir, sprintf("pc1_beliefs_conditional_%s.pdf", year)),
+    out_file      = file.path(viz_dir, sprintf("pc1_beliefs_conditional_%s%s.pdf", year, FILE_SUFFIX)),
     full_label    = "Beliefs (unconditional)",
     reduced_label = "Beliefs | persona",
     legend_pos    = "topright"
@@ -848,7 +848,7 @@ if (nrow(constraint_dt) && !isTRUE(get0("SKIP_V2B_PLOTS", ifnotfound = FALSE))) 
     reduced_col   = "De_beliefs_cond",
     xlab          = "Effective dependence De among beliefs",
     main          = "Effective dependence among beliefs: unconditional vs conditional on persona",
-    out_file      = file.path(viz_dir, sprintf("effective_dependence_beliefs_conditional_%s.pdf", year)),
+    out_file      = file.path(viz_dir, sprintf("effective_dependence_beliefs_conditional_%s%s.pdf", year, FILE_SUFFIX)),
     full_label    = "Beliefs (unconditional)",
     reduced_label = "Beliefs | persona",
     legend_pos    = "topleft"
@@ -988,7 +988,7 @@ gss_bg_comp <- merge(
 gss_bg_comp[, rater := factor(as.character(rater), levels = ordered_raters)]
 
 if (!isTRUE(get0("SKIP_V2B_PLOTS", ifnotfound = FALSE))) {
-  out_file_non_cum <- file.path(viz_dir, sprintf("nonpersona_cumulative_pc_share_%s.pdf", year))
+  out_file_non_cum <- file.path(viz_dir, sprintf("nonpersona_cumulative_pc_share_%s%s.pdf", year, FILE_SUFFIX))
   grDevices::pdf(out_file_non_cum, width = 17.5, height = 15)  # landscape
   
   p <- 
@@ -1040,7 +1040,7 @@ if (!isTRUE(get0("SKIP_V2B_PLOTS", ifnotfound = FALSE))) {
 ## ---- Plot 1b: nonpersona cumulative (all models in one panel) ------------ ##
 
 if (nrow(df_comp)) {
-  out_file_non_cum_all <- file.path(viz_dir, sprintf("nonpersona_cumulative_pc_share_allinone_%s.pdf", year))
+  out_file_non_cum_all <- file.path(viz_dir, sprintf("nonpersona_cumulative_pc_share_allinone_%s%s.pdf", year, FILE_SUFFIX))
   grDevices::pdf(out_file_non_cum_all, width = 10, height = 6)
   
   df_comp_overall <- df_comp[edu_group == "overall"]
@@ -1155,7 +1155,7 @@ gss_bg_total <- merge(
 # Re-impose facet ordering for background data (defensive)
 gss_bg_total[, rater := factor(as.character(rater), levels = ordered_raters)]
 
-out_file_tot_cum <- file.path(viz_dir, sprintf("total_cumulative_pc_share_%s.pdf", year))
+out_file_tot_cum <- file.path(viz_dir, sprintf("total_cumulative_pc_share_%s%s.pdf", year, FILE_SUFFIX))
 grDevices::pdf(out_file_tot_cum, width = 17.5, height = 15)
 
 p <- 

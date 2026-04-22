@@ -25,7 +25,7 @@ combine_stability_plots <- function(
   model_dirs <- model_dirs[grepl(sprintf("-%d$", year), model_dirs)]
 
   # Find PDFs
-  pdf_files <- file.path(model_dirs, "corr_mice_stability_check.pdf")
+  pdf_files <- file.path(model_dirs, paste0("corr_mice_stability_check", FILE_SUFFIX, ".pdf"))
   pdf_files <- pdf_files[file.exists(pdf_files)]
 
   message("Found ", length(pdf_files), " stability check PDFs")
@@ -118,7 +118,7 @@ combine_stability_plots <- function(
     page_image <- image_append(image_join(rows), stack = TRUE)
 
     # Save page
-    out_file <- file.path(output_dir, sprintf("stability_check_%d_%d.pdf", year, page))
+    out_file <- file.path(output_dir, sprintf("stability_check_%d_%d%s.pdf", year, page, FILE_SUFFIX))
 
     message("Saving page ", page, "/", n_pages, ": ", out_file,
             " (models ", start_idx, "-", end_idx, ")")

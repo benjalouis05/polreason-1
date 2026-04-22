@@ -62,7 +62,7 @@ for (r in seq_along(RATERrs_list)) {
   DIR_OUT <- file.path(BASE_OUT_DIR, paste0(as.character(RATER), "-", as.character(YEAR)))
 
   # Run from scratch if output doesn't exist or if you want to force re-run
-  run_from_scratch <- !file.exists(file.path(DIR_OUT, "polychor_bootstrap.rds"))
+  run_from_scratch <- !file.exists(file.path(DIR_OUT, paste0("polychor_bootstrap", FILE_SUFFIX, ".rds")))
 
   source(file = file.path(DIR_SCRIPTS, "2.polychor_bootstrap.R"))
 }

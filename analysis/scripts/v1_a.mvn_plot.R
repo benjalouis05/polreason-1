@@ -751,7 +751,7 @@ plot_all_bvn_pairs <- function(
   
   pairs <- utils::combn(beliefs, 2L, simplify = FALSE)
   
-  out_dir <- file.path(base_viz_dir, paste0("mvn_", year))
+  out_dir <- file.path(base_viz_dir, paste0("mvn_", year, FILE_SUFFIX))
   dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
   
   # Load GSS once (optional, used only for filename prefix preference)
@@ -792,7 +792,7 @@ plot_all_bvn_pairs <- function(
     }
     
     rho_prefix <- if (is.finite(prefix_med)) sprintf("%.3f", 100 * abs(prefix_med)) else "NA"
-    file_name  <- sprintf("%s_%s_%s.pdf", rho_prefix, belief_x, belief_y)
+    file_name  <- sprintf("%s_%s_%s%s.pdf", rho_prefix, belief_x, belief_y, FILE_SUFFIX)
     file_path  <- file.path(out_dir, file_name)
     
     pdf(file_path, width = 11.5, height = 7.5)

@@ -44,8 +44,8 @@ ORDER_MODE     <- "pc1"  # "pc1" or "contrast"
 STABILITY_MODE <- "alpha" # "alpha" or "border"
 
 # Output
-OUTFILE_VW     <- file.path(BASE_VIZ_DIR, sprintf("missing_variance_rayleigh_%d_redesign.pdf", YEAR))
-OUTFILE_EQ     <- file.path(BASE_VIZ_DIR, sprintf("missing_variance_rayleigh_%d_redesign_equalwidth.pdf", YEAR))
+OUTFILE_VW     <- file.path(BASE_VIZ_DIR, sprintf("missing_variance_rayleigh_%d_redesign%s.pdf", YEAR, FILE_SUFFIX))
+OUTFILE_EQ     <- file.path(BASE_VIZ_DIR, sprintf("missing_variance_rayleigh_%d_redesign_equalwidth%s.pdf", YEAR, FILE_SUFFIX))
 PDF_WIDTH      <- 22
 PDF_HEIGHT     <- 10
 

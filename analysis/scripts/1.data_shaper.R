@@ -186,4 +186,4 @@ data_j <- rbindlist(list(
 data_j[, variable := gsub('^persona_', '', variable)]
 
 # save the harmonised data
-saveRDS(object = data_j,file = paste0(DIR_OUT,'/harmonised_data.rds'))
+saveRDS(object = data_j,file = paste0(DIR_OUT,'/harmonised_data',FILE_SUFFIX,'.rds'))

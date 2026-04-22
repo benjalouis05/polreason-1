@@ -63,9 +63,9 @@ load_corr_for_rater <- function(
   dir_rater <- file.path(base_out_dir, sprintf("%s-%s", rater, year))
   
   fname <- if (identical(suffix, "")) {
-    "polychor_bootstrap.rds"
+    sprintf("polychor_bootstrap%s.rds", FILE_SUFFIX)
   } else {
-    sprintf("polychor_bootstrap_%s.rds", suffix)
+    sprintf("polychor_bootstrap_%s%s.rds", suffix, FILE_SUFFIX)
   }
   
   f <- file.path(dir_rater, fname)
