@@ -40,7 +40,7 @@ echo "Start time: $(date)"
 
 # Run the master R script with specific rater names as arguments
 # Note: master.R has been updated to accept these as filters.
-# Rscript analysis/scripts/master.R "mistralai_mistral-nemo_OLD" "Nemo_2" "Nemo_v3" "nemo_4" "nemo_5" "dom nemo"
-Rscript analysis/scripts/master.R "dom nemo"
+# Rscript analysis/scripts/master.R "mistralai_mistral-nemo_OLD" "Nemo_2" "Nemo_v3" "nemo_4" "nemo_5" "Dom Nemo v2"
+Rscript analysis/scripts/master.R "Dom Nemo v2"
 
 echo "Pipeline completed at: $(date)"
