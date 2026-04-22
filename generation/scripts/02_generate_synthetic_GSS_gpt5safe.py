@@ -427,6 +427,7 @@ Respond with ONLY the number of your answer (e.g., "1" or "2"). Do not explain y
 
     data = {
         "model": model,
+        "temperature": 1.5,
         "messages": [
             {"role": "user", "content": prompt}
         ]
@@ -685,8 +686,8 @@ def main():
         print("=" * 70)
         print()
 
-        # Clean model name for filename
-        model_filename = model.replace("/", "_")
+        # User requested to name it nemo_5
+        model_filename = "nemo_5"
         output_file = output_dir / f"{model_filename}.csv"
 
         # Load already-completed tasks for resume functionality
