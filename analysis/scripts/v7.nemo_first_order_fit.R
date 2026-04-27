@@ -21,6 +21,8 @@ suppressPackageStartupMessages({
 nemo_raters <- c(
   "mistralai_mistral-nemo_OLD",
   "mistralai_mistral-nemo",
+  "dom nemo",
+  "Dom Nemo v2",
   "Nemo_2",
   "Nemo_v3", 
   "nemo_4",
@@ -30,6 +32,8 @@ nemo_raters <- c(
 clean_names <- c(
   "mistralai_mistral-nemo_OLD" = "Mistral Nemo (Old)",
   "mistralai_mistral-nemo"     = "Mistral Nemo",
+  "dom nemo"                  = "Dom Nemo",
+  "Dom Nemo v2"               = "Dom Nemo v2",
   "Nemo_2"                    = "Nemo v2",
   "Nemo_v3"                   = "Nemo v3",
   "nemo_4"                    = "Nemo v4",
