@@ -1,0 +1,14 @@
+This is lavaan 0.6-21
+lavaan is FREE software! Please report any bugs.
+Loading required package: lpSolve
+Using raters specified in command line arguments: mode_1_first_person, Mode_2_full_lifechain, mode_3_nemo, temp_0.7_thirdperson
+Warning in melt.data.table(persona_attrs[persona_id %in% att_long$persona_id][,  :
+  'measure.vars' [persona_partyid, persona_polviews, persona_age, persona_educ, ...] are not all of the same type. By order of hierarchy, the molten data value column will be of type 'double'. All measure variables not of type 'double' will be coerced too. Check DETAILS in ?melt.data.table for more on coercion.
+Warning in melt.data.table(persona_attrs[persona_id %in% att_long$persona_id][,  :
+  'measure.vars' [persona_partyid, persona_polviews, persona_age, persona_educ, ...] are not all of the same type. By order of hierarchy, the molten data value column will be of type 'double'. All measure variables not of type 'double' will be coerced too. Check DETAILS in ?melt.data.table for more on coercion.
+Warning in melt.data.table(persona_attrs[persona_id %in% att_long$persona_id][,  :
+  'measure.vars' [persona_partyid, persona_polviews, persona_age, persona_educ, ...] are not all of the same type. By order of hierarchy, the molten data value column will be of type 'double'. All measure variables not of type 'double' will be coerced too. Check DETAILS in ?melt.data.table for more on coercion.
+Warning in melt.data.table(persona_attrs[persona_id %in% att_long$persona_id][,  :
+  'measure.vars' [persona_partyid, persona_polviews, persona_age, persona_educ, ...] are not all of the same type. By order of hierarchy, the molten data value column will be of type 'double'. All measure variables not of type 'double' will be coerced too. Check DETAILS in ?melt.data.table for more on coercion.
+Error: "persona_id" %chin% names(att_long) is not TRUE
+Execution halted

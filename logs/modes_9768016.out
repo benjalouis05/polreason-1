@@ -1,0 +1,8 @@
+Starting polreason analysis pipeline: master.R (Modes Subset)
+Job ID: 9768016
+Node: 
+Start time: Tue Apr 28 00:50:37 EDT 2026
+         used (Mb) gc trigger (Mb) max used (Mb)
+Ncells 296092 15.9     692371   37   481320 25.8
+Vcells 515347  4.0    8388608   64  1925267 14.7
+Pipeline completed at: Tue Apr 28 00:50:41 EDT 2026
