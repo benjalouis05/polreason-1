@@ -339,8 +339,10 @@ def query_openrouter(
     options: Dict[int, str],
     api_key: str,
     year: int,
+    temperature: float = 1.0,
     timeout: int = 30,
-    max_retries: int = 3
+    max_retries: int = 3,
+    provider: str = "openrouter"
 ) -> Dict:
     """
     Query OpenRouter API for a single question with retry logic.
@@ -382,7 +384,7 @@ Respond with ONLY the number of your answer (e.g., "1" or "2"). Do not explain y
         "messages": [
             {"role": "user", "content": prompt}
         ],
-        "temperature": 1.0, 
+        "temperature": temperature, 
         "max_tokens": 50
     }
 
@@ -390,8 +392,12 @@ Respond with ONLY the number of your answer (e.g., "1" or "2"). Do not explain y
 
     for attempt in range(max_retries):
         try:
+            api_url = OPENROUTER_API_URL
+            if provider == "mistral":
+                api_url = "https://api.mistral.ai/v1/chat/completions"
+                
             response = requests.post(
-                OPENROUTER_API_URL,
+                api_url,
                 headers=headers,
                 json=data,
                 timeout=timeout
@@ -520,17 +526,41 @@ def main():
         default=100,
         help="Number of results to accumulate before saving (default: 100)"
     )
+    parser.add_argument(
+        "--temperature",
+        type=float,
+        default=1.0,
+        help="Temperature for sampling (default: 1.0)"
+    )
+    parser.add_argument(
+        "--provider",
+        type=str,
+        default="openrouter",
+        choices=["openrouter", "mistral"],
+        help="API Provider (openrouter or mistral) (default: openrouter)"
+    )
 
     args = parser.parse_args()
     year = args.year
 
-    # Get API key
-    api_key = os.getenv("OPENROUTER_API_KEY")
-    if not api_key:
-        raise ValueError(
-            "OPENROUTER_API_KEY environment variable not set. "
-            "Get your API key from https://openrouter.ai/keys"
-        )
+    # Load API Keys (supports multiple comma-separated keys for rotation)
+    if args.provider == "mistral":
+        api_key_str = os.getenv('MISTRAL_API_KEY', '')
+        if not api_key_str:
+            # Fallback to OPENROUTER_API_KEY just in case the user passed it there
+            api_key_str = os.getenv('OPENROUTER_API_KEY', '')
+        if not api_key_str:
+            raise ValueError("MISTRAL_API_KEY environment variable not set.")
+    else:
+        api_key_str = os.getenv('OPENROUTER_API_KEY', '')
+        if not api_key_str:
+            raise ValueError("OPENROUTER_API_KEY environment variable not set. Get your API key from https://openrouter.ai/keys")
+    
+    api_keys = [k.strip() for k in api_key_str.split(',') if k.strip()]
+    if not api_keys:
+        raise ValueError("No valid API keys found.")
+    
+    print(f"Using {len(api_keys)} API keys for rotation.")
 
     # Determine models to use
     if args.all_models:
@@ -596,7 +626,14 @@ def main():
 
         # Clean model name for filename
         model_filename = model.replace("/", "_")
-        output_file = output_dir / f"{model_filename}.csv"
+        
+        # Special case for Nemo temperature sweep
+        # Account for mistral API open-mistral-nemo or openrouter mistralai/mistral-nemo
+        is_nemo = model in ["mistralai/mistral-nemo", "open-mistral-nemo"]
+        if is_nemo and args.temperature != 1.0:
+            output_file = output_dir / f"nemo_temp_{args.temperature}.csv"
+        else:
+            output_file = output_dir / f"{model_filename}.csv"
 
         # Load already-completed tasks for resume functionality
         completed_tasks = load_completed_tasks(output_file)
@@ -640,19 +677,25 @@ def main():
 
         results = []
 
-        # Process tasks in parallel
+        # Process tasks in parallel with key rotation
         with ThreadPoolExecutor(max_workers=args.max_workers) as executor:
-            future_to_task = {
-                executor.submit(
+            future_to_task = {}
+            for i, task in enumerate(tasks):
+                # Rotate through available API keys
+                current_api_key = api_keys[i % len(api_keys)]
+                
+                future = executor.submit(
                     query_openrouter,
                     model,
                     task['persona_text'],
                     task['question'],
                     task['options'],
-                    api_key,
-                    year
-                ): task for task in tasks
-            }
+                    current_api_key,
+                    year,
+                    temperature=args.temperature,
+                    provider=args.provider
+                )
+                future_to_task[future] = task
 
             pbar = tqdm(total=len(tasks), desc=model.split('/')[-1])
 
